@@ -32,6 +32,7 @@ import android.widget.ImageView;
 import com.example.tutoshowcase.R;
 import com.github.florent37.tutoshowcase.shapes.Circle;
 import com.github.florent37.tutoshowcase.shapes.RoundRect;
+import com.github.florent37.tutoshowcase.shapes.Square;
 
 public final class TutoShowcase {
 
@@ -349,9 +350,47 @@ public final class TutoShowcase {
             tutoShowcase.tutoView.postInvalidate();
         }
 
+
+        public ShapeViewActionsEditor addSquare() {
+            return addSquare(DEFAULT_ADDITIONAL_RADIUS_RATIO);
+        }
+
+        public ShapeViewActionsEditor addSquare(final float additionalRadiusRatio) {
+            view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    addSquareOnView(additionalRadiusRatio);
+                    view.getViewTreeObserver().removeOnPreDrawListener(this);
+                    return false;
+                }
+            });
+            return new ShapeViewActionsEditor(this);
+        }
+
+        private void addSquareOnView(float additionalRadiusRatio) {
+            Rect rect = new Rect();
+            view.getGlobalVisibleRect(rect);
+
+            int padding = 40;
+
+            final int x = rect.left - padding;
+            final int y = rect.top - getStatusBarOffset() - padding;
+            final int width = rect.width() + 2 * padding;
+            final int height = rect.height() + 2 * padding;
+
+            Square square = new Square(x, y, width, height);
+            square.setDisplayBorder(settings.withBorder);
+            tutoShowcase.tutoView.addSquare(square);
+            addClickableView(rect, settings.onClickListener, additionalRadiusRatio);
+            tutoShowcase.tutoView.postInvalidate();
+        }
+
         public ShapeViewActionsEditor addRoundRect() {
             return addRoundRect(DEFAULT_ADDITIONAL_RADIUS_RATIO);
         }
+
+
+
 
         public ShapeViewActionsEditor addRoundRect(final float additionalRadiusRatio) {
             view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {

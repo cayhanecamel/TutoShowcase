@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .setContentView(R.layout.tuto_sample)
                 .setFitsSystemWindows(true)
-                .on(R.id.about)
-                .addCircle()
+                .on(R.id.display)
+                .addSquare()
                 .withBorder()
                 .onClick(new View.OnClickListener() {
                     @Override

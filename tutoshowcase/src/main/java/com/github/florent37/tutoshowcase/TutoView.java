@@ -10,6 +10,7 @@ import android.view.View;
 import com.github.florent37.tutoshowcase.shapes.Circle;
 import com.github.florent37.tutoshowcase.shapes.RoundRect;
 import com.github.florent37.tutoshowcase.shapes.Shape;
+import com.github.florent37.tutoshowcase.shapes.Square;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,10 @@ class TutoView extends View {
 
     public void addRoundRect(RoundRect roundRect) {
         this.shapes.add(roundRect);
+    }
+
+    public void addSquare(Square square) {
+        this.shapes.add(square);
     }
 
     public int getBackgroundOverlayColor() {
