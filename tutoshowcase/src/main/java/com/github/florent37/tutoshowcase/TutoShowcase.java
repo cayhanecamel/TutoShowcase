@@ -373,14 +373,8 @@ public final class TutoShowcase {
 
             int padding = 0;
 
-            Rect rectAll = new Rect();
-            view.getWindowVisibleDisplayFrame(rectAll);
-            int statusBarHeight = rectAll.top;
-
             final int x = rect.left;
-            final int y = rect.top - statusBarHeight;
-
-
+            final int y = rect.top- getStatusBarOffset() - padding;
             final int width = rect.width() + 2;
             final int height = rect.height() + 2;
 
