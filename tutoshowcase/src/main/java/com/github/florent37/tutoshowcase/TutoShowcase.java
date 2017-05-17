@@ -371,12 +371,18 @@ public final class TutoShowcase {
             Rect rect = new Rect();
             view.getGlobalVisibleRect(rect);
 
-            int padding = 40;
+            int padding = 0;
 
-            final int x = rect.left - padding;
-            final int y = rect.top - getStatusBarOffset() - padding;
-            final int width = rect.width() + 2 * padding;
-            final int height = rect.height() + 2 * padding;
+            Rect rectAll = new Rect();
+            view.getWindowVisibleDisplayFrame(rectAll);
+            int statusBarHeight = rectAll.top;
+
+            final int x = rect.left;
+            final int y = rect.top - statusBarHeight;
+
+
+            final int width = rect.width() + 2;
+            final int height = rect.height() + 2;
 
             Square square = new Square(x, y, width, height);
             square.setDisplayBorder(settings.withBorder);
