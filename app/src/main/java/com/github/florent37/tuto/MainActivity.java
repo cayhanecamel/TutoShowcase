@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .setContentView(R.layout.tuto_sample)
                 .setFitsSystemWindows(true)
+                .setDismissByTap(false)
                 .on(R.id.display)
                 .addSquare()
                 .withBorder()

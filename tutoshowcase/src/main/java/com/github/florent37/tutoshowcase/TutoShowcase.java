@@ -47,6 +47,7 @@ public final class TutoShowcase {
     private SharedPreferences sharedPreferences;
     private boolean fitsSystemWindows = false;
     private Listener listener;
+    private boolean isDismissByTap = true;
 
     private TutoShowcase(@NonNull Activity activity) {
         this.sharedPreferences = activity.getSharedPreferences(SHARED_TUTO, Context.MODE_PRIVATE);
@@ -60,7 +61,7 @@ public final class TutoShowcase {
                 if (content != null) {
                     content.addView(container, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                     this.container.addView(tutoView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                    if(android.os.Build.VERSION.SDK_INT >= 16) {
+                    if (android.os.Build.VERSION.SDK_INT >= 16) {
                         View inflatedLayout = content.getChildAt(0);
                         this.fitsSystemWindows = inflatedLayout != null ? inflatedLayout.getFitsSystemWindows() : false;
                     }
@@ -74,6 +75,11 @@ public final class TutoShowcase {
     @NonNull
     public static TutoShowcase from(@NonNull Activity activity) {
         return new TutoShowcase(activity);
+    }
+
+    public TutoShowcase setDismissByTap(boolean isDismissByTap) {
+        this.isDismissByTap = isDismissByTap;
+        return this;
     }
 
     public TutoShowcase setBackgroundColor(@ColorInt int color) {
@@ -109,7 +115,7 @@ public final class TutoShowcase {
                         if (parent instanceof ViewGroup) {
                             ((ViewGroup) parent).removeView(view);
                         }
-                        if(listener != null) {
+                        if (listener != null) {
                             listener.onDismissed();
                         }
                     }
@@ -148,7 +154,9 @@ public final class TutoShowcase {
         container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismiss();
+                if(isDismissByTap){
+                    dismiss();
+                }
             }
         });
         return this;
@@ -374,7 +382,7 @@ public final class TutoShowcase {
             int padding = 0;
 
             final int x = rect.left;
-            final int y = rect.top- getStatusBarOffset() - padding;
+            final int y = rect.top - getStatusBarOffset() - padding;
             final int width = rect.width() + 2;
             final int height = rect.height() + 2;
 
@@ -388,8 +396,6 @@ public final class TutoShowcase {
         public ShapeViewActionsEditor addRoundRect() {
             return addRoundRect(DEFAULT_ADDITIONAL_RADIUS_RATIO);
         }
-
-
 
 
         public ShapeViewActionsEditor addRoundRect(final float additionalRadiusRatio) {
@@ -446,7 +452,7 @@ public final class TutoShowcase {
          */
         private int getStatusBarOffset() {
             int result = 0;
-            if(!this.fitsSystemWindow) {
+            if (!this.fitsSystemWindow) {
                 Context context = view.getContext();
                 Resources resources = context.getResources();
                 int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
@@ -529,12 +535,12 @@ public final class TutoShowcase {
             super(viewActions);
         }
 
-        public ActionViewActionsEditor delayed(int delay){
+        public ActionViewActionsEditor delayed(int delay) {
             this.viewActions.settings.delay = delay;
             return this;
         }
 
-        public ActionViewActionsEditor duration(int duration){
+        public ActionViewActionsEditor duration(int duration) {
             this.viewActions.settings.duration = duration;
             return this;
         }
